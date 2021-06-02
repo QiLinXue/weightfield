@@ -2,28 +2,12 @@
 #			Makefile			#
 #################################
 
-SOURCES := Weightfield.cxx WFGUI.cxx Potentials.cxx Field.cxx Carriers.cxx
-HEADERS := WFGUI.h Potentials.h Field.h Carriers.h
-FILE_TO_CHECK := root_files/Geant_Vin.root
-ROOT_CONF := `root-config --cflags --glibs`
-
-weightfield: $(HEADERS) $(SOURCES)
-ifeq ($(wildcard $(FILE_TO_CHECK)),)
-	$(error Missing file $(FILE_TO_CHECK))
-endif
+weightfield: WFGUI.h WFGUI.cxx Potentials.h Potentials.cxx Field.h Field.cxx Carriers.h Carriers.cxx
 	rootcint -f Dict.cxx -c WFGUI.h LinkDef.h 
-	g++ -O3 -Wall -Wextra -o weightfield $(SOURCES) $(ROOT_CONF) Dict.cxx -lCint 
-	
-all: $(HEADERS) $(SOURCES)
-ifeq ($(wildcard $(FILE_TO_CHECK)),)
-	$(error Missing file $(FILE_TO_CHECK))
-endif
+	g++ -O3 -Wall -Wextra -o weightfield Weightfield.cxx WFGUI.cxx Potentials.cxx Field.cxx Carriers.cxx `root-config --cflags --glibs` Dict.cxx  
+all: WFGUI.h WFGUI.cxx Potentials.h Potentials.cxx Field.h Field.cxx Carriers.h Carriers.cxx
 	rootcint -f Dict.cxx -c WFGUI.h LinkDef.h 
-	g++ -O3 -Wall -Wextra -o weightfield $(SOURCES) $(ROOT_CONF) Dict.cxx -lCint 
-	
-debug: $(HEADERS) $(SOURCES)
-ifeq ($(wildcard $(FILE_TO_CHECK)),)
-	$(error Missing file $(FILE_TO_CHECK))
-endif
+	g++ -O3 -Wall -Wextra -o weightfield Weightfield.cxx WFGUI.cxx Potentials.cxx Field.cxx Carriers.cxx `root-config --cflags --glibs` Dict.cxx  
+debug: WFGUI.h WFGUI.cxx Potentials.h Potentials.cxx Field.h Field.cxx Carriers.h Carriers.cxx
 	rootcint -f Dict.cxx -c WFGUI.h LinkDef.h 
-	g++ -g -O0 -Wall -Wextra -o weightfield $(SOURCES) $(ROOT_CONF) Dict.cxx -lCint
+	g++ -g -O0 -Wall -Wextra -o weightfield Weightfield.cxx WFGUI.cxx Potentials.cxx Field.cxx Carriers.cxx `root-config --cflags --glibs` Dict.cxx 
